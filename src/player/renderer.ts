@@ -38,6 +38,28 @@ export default class Renderer {
       this.audioConfigs[frame] = acs
     }
 
+    const loadImages = Object.entries(videoItem.images).map(async ([key, item]) => {
+
+      // if (key === 'img_2103111811') {
+      //   // const bbb = data.images['img_2103111811'];
+      //   const buff: ArrayBuffer = item as any;
+      //   const int32 = new Uint8Array(buff);
+      //   let s = '';
+      //   for (let i=0;i< int32.length; i++) {
+      //     s += int32[i];
+      //   }
+      //   console.log('str2', s.length, s);
+      //   console.log('---------------');
+      // }
+
+      if (item instanceof ArrayBuffer) {
+        const blob = new Blob([item], { type: 'image/png' })
+        const bitmap = await createImageBitmap(blob);
+        videoItem.images[key] = bitmap;
+      }
+      return item;
+    });
+
     const loadAudios = Object.values(videoItem.audios).map(
       ({ source, startFrame, endFrame, audioKey, startTime, totalTime }) =>
         new Promise((resolve) => {
@@ -64,7 +86,7 @@ export default class Renderer {
         })
     )
 
-    await Promise.all(loadAudios)
+    await Promise.all([...loadAudios, ...loadImages])
   }
 
   public processAudio(frame: number): void {
