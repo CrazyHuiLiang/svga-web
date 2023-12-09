@@ -29,6 +29,13 @@ export default class Renderer {
   public async prepare(videoItem: VideoEntity): Promise<void> {
     this.audios = []
     this.audioConfigs = {}
+    // 重新设置 canvas 的尺寸，哪怕设置的值与原值没有区别，都会导致 canvas 重绘，在移动端上会清屏 https://blog.csdn.net/harmsworth2016/article/details/118426390
+    if (this.target.width !== videoItem.videoSize.width) {
+      this.target.width = videoItem.videoSize.width;
+    }
+    if (this.target.height !== videoItem.videoSize.height) {
+      this.target.height = videoItem.videoSize.height;
+    }
     this.target.width = videoItem.videoSize.width
     this.target.height = videoItem.videoSize.height
 
