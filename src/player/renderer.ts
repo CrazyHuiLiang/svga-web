@@ -36,8 +36,6 @@ export default class Renderer {
     if (this.target.height !== videoItem.videoSize.height) {
       this.target.height = videoItem.videoSize.height;
     }
-    this.target.width = videoItem.videoSize.width
-    this.target.height = videoItem.videoSize.height
 
     const addAudioConfig = (frame: number, ac: AudioConfig) => {
       const acs = this.audioConfigs[frame] || []
@@ -46,19 +44,6 @@ export default class Renderer {
     }
 
     const loadImages = Object.entries(videoItem.images).map(async ([key, item]) => {
-
-      // if (key === 'img_2103111811') {
-      //   // const bbb = data.images['img_2103111811'];
-      //   const buff: ArrayBuffer = item as any;
-      //   const int32 = new Uint8Array(buff);
-      //   let s = '';
-      //   for (let i=0;i< int32.length; i++) {
-      //     s += int32[i];
-      //   }
-      //   console.log('str2', s.length, s);
-      //   console.log('---------------');
-      // }
-
       if (item instanceof ArrayBuffer) {
         const blob = new Blob([item], { type: 'image/png' })
         const bitmap = await createImageBitmap(blob);
