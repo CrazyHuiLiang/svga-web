@@ -80,7 +80,7 @@ export default class Renderer {
         })
     )
 
-    await Promise.all([...loadAudios, ...loadImages])
+    await Promise.all(loadImages)
   }
 
   public processAudio(frame: number): void {
