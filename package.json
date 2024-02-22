@@ -1,6 +1,6 @@
 {
-  "name": "svga-web",
-  "version": "2.3.2",
+  "name": "svga-web2",
+  "version": "2.4.0",
   "description": "A SVGA player for modern Web.",
   "homepage": "https://github.com/Naeemo/svga-web",
   "bugs": {
@@ -31,6 +31,7 @@
   "types": "src/index.ts",
   "scripts": {
     "prestart": "prettier --check ./src && tsc -p ./",
+    "prettier": "prettier -w ./src",
     "start": "eslint ./src && vite",
     "prebuild": "prettier --check ./src && tsc -p ./",
     "build": "vite build",

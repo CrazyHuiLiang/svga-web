@@ -57,11 +57,14 @@ export default class Renderer {
     const loadAudios = Object.values(videoItem.audios).map(
       ({ source, startFrame, endFrame, audioKey, startTime, totalTime }) =>
         new Promise((resolve) => {
-          const audio = new Audio(
-            URL.createObjectURL(
-              new Blob([new Uint8Array(source)], { type: 'audio/x-mpeg' })
+          const cachedAudio = videoItem.cachedAudio[audioKey]
+          const audio =
+            cachedAudio ||
+            new Audio(
+              URL.createObjectURL(
+                new Blob([new Uint8Array(source)], { type: 'audio/x-mpeg' })
+              )
             )
-          )
 
           const ac: AudioConfig = {
             audioKey,

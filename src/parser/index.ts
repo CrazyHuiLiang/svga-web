@@ -78,6 +78,22 @@ export default class Parser {
     })
   }
 
+  /*
+   * Create and cache audio
+   * in some environments like "wx applet's webview" who require create audio use user click,otherwise will lead
+   * the audio can't play (exception call play when user click);
+   *
+   * this method provide a way to resolve this situation: use user click action to precache audio instance
+   */
+  public cacheAudioPlayer(videoItem: VideoEntity) {
+    return Object.values(videoItem.audios).map(({ source, audioKey }) => {
+      const url = URL.createObjectURL(
+        new Blob([new Uint8Array(source)], { type: 'audio/x-mpeg' })
+      )
+      return (videoItem.cachedAudio[audioKey] = new Audio(url))
+    })
+  }
+
   /**
    * Destroy the web worker under the hood, may delay if still working
    */
