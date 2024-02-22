@@ -1,6 +1,6 @@
 {
   "name": "svga-web2",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "A SVGA player for modern Web.",
   "homepage": "https://github.com/Naeemo/svga-web",
   "bugs": {
@@ -20,12 +20,12 @@
     "dist",
     "src"
   ],
-  "main": "./dist/svga-web.umd.js",
-  "module": "./dist/svga-web.es.js",
+  "main": "./dist/svga-web2.umd.js",
+  "module": "./dist/svga-web2.mjs",
   "exports": {
     ".": {
       "import": "./dist/svga-web.es.js",
-      "require": "./dist/svga-web.umd.js"
+      "require": "./dist/svga-web2.umd.js"
     }
   },
   "types": "src/index.ts",
