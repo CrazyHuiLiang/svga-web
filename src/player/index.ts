@@ -221,9 +221,9 @@ export default class Player {
         break
       case 'number':
         if (loop <= 0) {
-          console.warn(
-            '[svga-web] set loop to 0 is deprecated, use "loop: true" instead'
-          )
+          // console.warn(
+          //   '[svga-web] set loop to 0 is deprecated, use "loop: true" instead'
+          // )
           this.animator.loop = true
         } else {
           this.animator.loop = false

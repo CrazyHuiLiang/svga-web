@@ -68,10 +68,13 @@ export default class Animator {
    * Process a frame, and process later frames repeatedly
    */
   private readonly doFrame = () => {
+    // 动画已经进行的时长
     const deltaTime = Animator.currentTimeMillisecond() - this.startTimestamp
     let fraction: number
+    // 非循环播放的动画，当前时间已经超过了动画应播放的时间
     if (!this.loop && deltaTime >= this.duration * this.repeatNumber) {
       fraction = this.fillRule === FILL_MODE.BACKWARDS ? 0.0 : 1.0
+      // 标记已经完成播放
       this.isRunning = false
     } else {
       fraction = (deltaTime % this.duration) / this.duration
@@ -81,10 +84,10 @@ export default class Animator {
 
     if (this.isRunning) {
       if (this.timeoutWorker) {
-        this.timeoutWorker.onmessage = this.doFrame
+        this.timeoutWorker.onmessage = () => this.isRunning && this.doFrame();
         this.timeoutWorker.postMessage(null)
       } else {
-        window.requestAnimationFrame(this.doFrame)
+        window.requestAnimationFrame(() => this.isRunning && this.doFrame())
       }
     } else {
       if (this.timeoutWorker !== null) {

@@ -1,14 +1,14 @@
 {
   "name": "svga-web2",
-  "version": "2.2.4",
+  "version": "2.4.3",
   "description": "A SVGA player for modern Web.",
-  "homepage": "https://github.com/Naeemo/svga-web",
+  "homepage": "https://github.com/CrazyHuiLiang/svga-web",
   "bugs": {
-    "url": "https://github.com/Naeemo/svga-web/issues"
+    "url": "https://github.com/CrazyHuiLiang/svga-web/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Naeemo/svga-web.git"
+    "url": "git+https://github.com/CrazyHuiLiang/svga-web.git"
   },
   "keywords": [
     "svga",
@@ -21,16 +21,17 @@
     "src"
   ],
   "main": "./dist/svga-web2.umd.js",
-  "module": "./dist/svga-web2.es.js",
+  "module": "./dist/svga-web2.mjs",
   "exports": {
     ".": {
-      "import": "./dist/svga-web2.js",
+      "import": "./dist/svga-web.mjs",
       "require": "./dist/svga-web2.umd.js"
     }
   },
   "types": "src/index.ts",
   "scripts": {
     "prestart": "prettier --check ./src && tsc -p ./",
+    "prettier": "prettier -w ./src",
     "start": "eslint ./src && vite",
     "build": "vite build",
     "prepublish": "yarn build",

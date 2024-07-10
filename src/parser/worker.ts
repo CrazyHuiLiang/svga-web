@@ -23,7 +23,7 @@ onmessage = function (event: MessageEvent<{ data: ArrayBuffer; id: number }>) {
   const movie = svga.MovieEntity.decode(inflateData)
   const images: ImageSources = {}
   const audios: AudioSources = {}
-  const transferables = new Set<Transferable>();
+  const transferables = new Set<Transferable>()
 
   // parse audios
   movie.audios.forEach((audio) => {
@@ -65,31 +65,15 @@ onmessage = function (event: MessageEvent<{ data: ArrayBuffer; id: number }>) {
     }
 
     const sourceBuffer = uint8.buffer.slice(
-        uint8.byteOffset,
-        uint8.byteOffset + uint8.byteLength
+      uint8.byteOffset,
+      uint8.byteOffset + uint8.byteLength
     )
-    images[key] = sourceBuffer;
+    images[key] = sourceBuffer
     transferables.add(sourceBuffer)
   }
 
-
   const data = new VideoEntity(movie, images, audios)
 
-  const transfers = Array.from(transferables);
-
-
-  // const bbb = data.images['img_2103111811'];
-  // const buff: ArrayBuffer = bbb as any;
-  // const int32 = new Uint8Array(buff);
-  // let s = '';
-  // for (let i=0;i< int32.length; i++) {
-  //   s += int32[i];
-  // }
-  // console.log('str', s.length, s);
-  // console.log('---------------');
-  //
-  //
-  // console.log('buffer', { result: data, id: event.data.id }, transfers);
-
-  postMessage({ result: data, id: event.data.id }, transfers);
+  const transfers = Array.from(transferables)
+  postMessage({ result: data, id: event.data.id }, transfers)
 }

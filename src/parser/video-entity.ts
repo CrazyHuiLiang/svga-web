@@ -8,7 +8,7 @@ export interface VideoSize {
 }
 
 export interface ImageSources {
-  [key: string]: CanvasImageSource|ArrayBuffer
+  [key: string]: CanvasImageSource | ArrayBuffer
 }
 
 interface AudioSource extends svga.AudioEntity {
@@ -42,6 +42,7 @@ export default class VideoEntity {
   public frames: number
   public images: ImageSources = {}
   public audios: AudioSources = {}
+  public cachedAudio: Record<string, HTMLAudioElement> = {}
   public dynamicElements: DynamicElements = {}
   public sprites: Array<Sprite> = []
 
