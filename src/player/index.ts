@@ -34,16 +34,21 @@ export enum PLAY_MODE {
 }
 
 export default class Player {
+  // 记录当前应该渲染的帧
   public currentFrame = 0
   public readonly container: HTMLCanvasElement
   private videoItem: VideoEntity | null = null
   private playMode: PLAY_MODE = PLAY_MODE.FORWARDS
+  // 帧区间
   private startFrame = 0
   private endFrame = 0
+  // 是否渲染屏幕外的动画
   private intersectionObserverRenderShow = true
   private intersectionObserver: IntersectionObserver | null = null
+  // 渲染器
   private renderer: Renderer
   private animator: Animator
+  // 事件
   private $onEvent: {
     [EVENT_TYPES.START]: () => unknown
     [EVENT_TYPES.PROCESS]: () => unknown
@@ -80,6 +85,7 @@ export default class Player {
       throw new Error('container should be HTMLCanvasElement.')
     }
 
+    // 实例化渲染器、动画驱动器/定时器
     this.renderer = new Renderer(this.container)
     this.animator = new Animator()
     videoItem && this.mount(videoItem)
@@ -89,6 +95,7 @@ export default class Player {
     }
   }
 
+  // 播放进度（百分比）
   public get progress(): number {
     if (!this.videoItem) {
       return 0
@@ -115,7 +122,7 @@ export default class Player {
     startFrame = 0,
     endFrame = 0,
     cacheFrames = false,
-    intersectionObserverRender = false,
+    intersectionObserverRender = false, // 开启画板在页面可视区之外，不进行页面渲染（如果支持的话）
     noExecutionDelay = false,
   }: options): void {
     this.playMode = playMode
@@ -130,9 +137,12 @@ export default class Player {
     this.renderer.isCacheFrame = cacheFrames
   }
 
+  // 挂载素材
   public mount(videoItem: VideoEntity): Promise<void> {
+    // 将当前播放的帧置为 0
     this.currentFrame = 0
     this.videoItem = videoItem
+    // 有副作用的一个调用，会转化 videoItem 中的部分结构的格式
     return this.renderer.prepare(videoItem)
   }
 
@@ -176,6 +186,7 @@ export default class Player {
     this.videoItem = null
   }
 
+  // 设置事件监听函数，每个事件只支持一个事件处理函数
   public $on(eventName: EVENT_TYPES, execFunction: () => unknown): this {
     this.$onEvent[eventName] = execFunction
 
@@ -256,10 +267,12 @@ export default class Player {
       this.currentFrame = startFrame || 0
     }
 
+    // 计算开始帧
     this.animator.startValue =
       playMode === PLAY_MODE.FALLBACKS
         ? endFrame || totalFramesCount
         : startFrame || 0
+    // 计算结束帧
     this.animator.endValue =
       playMode === PLAY_MODE.FALLBACKS
         ? startFrame || 0
@@ -271,8 +284,10 @@ export default class Player {
       frames = frames - startFrame
     }
 
+    // 计算总时长
     this.animator.duration = frames * (1.0 / FPS) * 1000
 
+    // 设置动画更新监听
     this.animator.onUpdate = (value: number) => {
       value = Math.floor(value)
 
@@ -286,6 +301,7 @@ export default class Player {
 
       this.currentFrame = value
 
+      // 如果画板在可视区域，进行页面渲染
       if (this.intersectionObserverRenderShow) {
         this.renderer.drawFrame(
           images,
@@ -301,6 +317,7 @@ export default class Player {
     if (this.playMode === PLAY_MODE.FORWARDS) {
       this.renderer.processAudio(0)
     }
+    // 开始动画定时
     this.animator.start(this.currentFrame)
   }
 }
