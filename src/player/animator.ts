@@ -15,9 +15,9 @@ export default class Animator {
   // 使用定时器驱动动画
   public noExecutionDelay = false // 依赖外层使用者进行设置
   // 帧区间
-  public startValue = 0// 依赖外层使用者进行设置
-  public endValue = 0// 依赖外层使用者进行设置
-  public duration = 0// 依赖外层使用者进行设置
+  public startValue = 0 // 依赖外层使用者进行设置
+  public endValue = 0 // 依赖外层使用者进行设置
+  public duration = 0 // 依赖外层使用者进行设置
   // 循环
   public repeatNumber = 1 // 依赖外层使用者进行设置
   public loop = false // 依赖外层使用者进行设置
@@ -32,6 +32,7 @@ export default class Animator {
   private startTimestamp = 0
   // 60fps 的速度驱动动画渲染
   private timeoutWorker: Worker | null = null
+  private rAF: number | null = null
 
   /**
    * Get current time in milliseconds
@@ -60,9 +61,27 @@ export default class Animator {
         window.URL.createObjectURL(new Blob([WORKER]))
       )
     }
+    // 关闭之前调用 start 时开启的延时任务
+    this.stopRAF();
 
     // 渲染首帧
     this.doFrame()
+  }
+
+  // 关闭延时任务
+  private stopRAF() {
+    if (this.rAF !== null) {
+      cancelAnimationFrame(this.rAF)
+      this.rAF = null
+    }
+  }
+
+  // 停止定时器
+  private stopTimer() {
+    if (this.timeoutWorker !== null) {
+      this.timeoutWorker.terminate()
+      this.timeoutWorker = null
+    }
   }
 
   /**
@@ -70,11 +89,8 @@ export default class Animator {
    */
   public stop(): void {
     this.isRunning = false
-
-    if (this.timeoutWorker !== null) {
-      this.timeoutWorker.terminate()
-      this.timeoutWorker = null
-    }
+    this.stopTimer()
+    this.stopRAF();
   }
 
   /**
@@ -100,6 +116,7 @@ export default class Animator {
     // 根据播放进度，求出应播放的帧
     const frame = (this.endValue - this.startValue) * fraction + this.startValue
     // 通知外层更新动画
+    // console.log('svga request frame', Math.floor(frame))
     this.onUpdate(frame)
 
     // 当前动画正在播放
@@ -111,15 +128,12 @@ export default class Animator {
       }
       // 使用 requestAnimationFrame 驱动动画播放
       else {
-        window.requestAnimationFrame(() => this.isRunning && this.doFrame())
+        this.rAF = window.requestAnimationFrame(() => this.isRunning && this.doFrame())
       }
     }
     // 动画已结束
     else {
-      if (this.timeoutWorker !== null) {
-        this.timeoutWorker.terminate()
-        this.timeoutWorker = null
-      }
+      this.stopTimer()
       this.onEnd()
     }
   }

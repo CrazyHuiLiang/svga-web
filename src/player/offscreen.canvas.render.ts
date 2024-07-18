@@ -50,7 +50,7 @@ function render(
       } else if(img instanceof ImageBitmap) {
         context.drawImage(img as ImageBitmap, 0, 0)
       } else {
-        console.warn('img type not supported', img);
+        console.warn('img type not supported', sprite.imageKey, img, bitmapCache);
       }
     }
 

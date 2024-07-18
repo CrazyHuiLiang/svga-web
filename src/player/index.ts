@@ -137,10 +137,15 @@ export default class Player {
     this.renderer.isCacheFrame = cacheFrames
   }
 
-  // 挂载素材
+  /*
+   * 挂载素材
+   *
+   * 将当前播放帧重置为 0
+   * 更换新的素材
+   * 使用新的素材尺寸设置画板尺寸
+   */
   public mount(videoItem: VideoEntity): Promise<void> {
-    // 将当前播放的帧置为 0
-    this.currentFrame = 0
+
     this.videoItem = videoItem
     // 有副作用的一个调用，会转化 videoItem 中的部分结构的格式
     return this.renderer.prepare(videoItem)
@@ -150,6 +155,8 @@ export default class Player {
     if (!this.videoItem) {
       throw new Error('video item undefined.')
     }
+    // 将当前播放的帧置为 0
+    this.currentFrame = 0
     this.startAnimation(this.videoItem)
     this.$onEvent.start()
   }
