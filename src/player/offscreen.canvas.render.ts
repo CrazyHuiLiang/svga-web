@@ -45,12 +45,14 @@ function render(
         })
         context.clip()
       }
-      if (img instanceof Image) {
-        context.drawImage(img, 0, 0, img.width, img.height)
-      } else if(img instanceof ImageBitmap) {
-        context.drawImage(img as ImageBitmap, 0, 0)
-      } else {
-        console.warn('img type not supported', sprite.imageKey, img, bitmapCache);
+      try {
+        if (img instanceof Image) {
+          context.drawImage(img, 0, 0, img.width, img.height)
+        } else {
+          context.drawImage(img as ImageBitmap, 0, 0)
+        }
+      } catch (e) {
+        console.warn('img type not supported', sprite.imageKey, img, e);
       }
     }
 
