@@ -52,7 +52,7 @@ function render(
           context.drawImage(img as ImageBitmap, 0, 0)
         }
       } catch (e) {
-        console.warn('img type not supported', sprite.imageKey, img, e);
+        // console.warn('img type not supported', sprite.imageKey, img, e);
       }
     }
 
