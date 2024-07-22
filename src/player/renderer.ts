@@ -119,7 +119,10 @@ export default class Renderer {
     acs.forEach(function (ac) {
       if (ac.startFrame === frame) {
         ac.audio.currentTime = ac.startTime
-        ac.audio.play()
+        // 提供一个全局的可以将svga音频禁用的控制开关
+        if (!window.svga_web_no_audo_effect) {
+          ac.audio.play().catch(e => console.log('effect play error', e))
+        }
         return
       }
 
