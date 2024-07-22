@@ -1,6 +1,8 @@
 import ParserWorker from './worker.ts?worker&inline'
 import VideoEntity from './video-entity'
 import { getVersion, Version } from './version'
+import {Howl} from 'howler'
+
 
 export * from './frame-entity'
 export * from './video-entity'
@@ -90,7 +92,10 @@ export default class Parser {
       const url = URL.createObjectURL(
         new Blob([new Uint8Array(source)], { type: 'audio/x-mpeg' })
       )
-      return (videoItem.cachedAudio[audioKey] = new Audio(url))
+      return (videoItem.cachedAudio[audioKey] = new Howl({
+        format: ['mp3', 'dolby', 'webm'],
+        src: [url]
+      }))
     })
   }
 
