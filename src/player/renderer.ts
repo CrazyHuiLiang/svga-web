@@ -120,7 +120,7 @@ export default class Renderer {
       if (ac.startFrame === frame) {
         ac.audio.currentTime = ac.startTime
         // 提供一个全局的可以将svga音频禁用的控制开关
-        if (!window.svga_web_no_audo_effect) {
+        if (window.svga_web_audio_effect !== 'close') {
           ac.audio.play().catch(e => console.log('effect play error', e))
         }
         return
