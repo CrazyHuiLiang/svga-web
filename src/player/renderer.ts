@@ -1,5 +1,6 @@
 import render from './offscreen.canvas.render'
 import { com } from '../proto/svga'
+import {Howl} from 'howler'
 import VideoEntity, {
   DynamicElements,
   ImageSources,
@@ -78,11 +79,12 @@ export default class Renderer {
           const cachedAudio = videoItem.cachedAudio[audioKey]
           const audio =
             cachedAudio ||
-            new Audio(
-              URL.createObjectURL(
+            new Howl({
+              format: ['mp3', 'dolby', 'webm'],
+              src: [URL.createObjectURL(
                 new Blob([new Uint8Array(source)], { type: 'audio/x-mpeg' })
-              )
-            )
+              )]
+            })
 
           const ac: AudioConfig = {
             audioKey,
@@ -96,7 +98,7 @@ export default class Renderer {
           addAudioConfig(endFrame, ac)
           this.audios.push(audio)
 
-          audio.onloadeddata = resolve
+          audio.once('load', resolve)
           audio.load()
         })
     )
@@ -118,17 +120,18 @@ export default class Renderer {
 
     acs.forEach(function (ac) {
       if (ac.startFrame === frame) {
-        ac.audio.currentTime = ac.startTime
+        ac.audio.seek(ac.startTime)
         // 提供一个全局的可以将svga音频禁用的控制开关
         if (window.svga_web_audio_effect !== 'close') {
-          ac.audio.play().catch(e => console.log('effect play error', e))
+          console.log('ac.audio', ac.audio);
+          ac.audio.play()
         }
         return
       }
 
       if (ac.endFrame === frame) {
         ac.audio.pause()
-        ac.audio.currentTime = 0
+        ac.audio.seek(0)
         return
       }
     })
@@ -189,7 +192,7 @@ export default class Renderer {
   public stopAllAudio(): void {
     this.audios.forEach(function (audio) {
       audio.pause()
-      audio.currentTime = 0
+      audio.seek(0);
     })
   }
 }

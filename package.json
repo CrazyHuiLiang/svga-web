@@ -1,6 +1,6 @@
 {
   "name": "svga-web2",
-  "version": "2.4.9",
+  "version": "2.4.10",
   "description": "A SVGA player for modern Web.",
   "homepage": "https://github.com/CrazyHuiLiang/svga-web",
   "bugs": {
@@ -58,7 +58,9 @@
     "typescript": "^4.5.5",
     "vite": "^3.0.8"
   },
-  "dependencies": {},
+  "dependencies": {
+    "howler": "^2.2.4"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
