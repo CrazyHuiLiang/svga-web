@@ -171,6 +171,10 @@ export default class Player {
     this.$onEvent.pause()
   }
 
+  public stopAllAudio() {
+    this.renderer.stopAllAudio()
+  }
+
   public stop(): void {
     this.animator.stop()
     this.renderer.clear()
