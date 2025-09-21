@@ -1,9 +1,9 @@
-# svga-web
+# svga-web2
 
 <p>
-  <a href="https://npmcharts.com/compare/svga-web?minimal=true"><img src="https://img.shields.io/npm/dm/svga-web.svg?sanitize=true" alt="Downloads"></a>
-  <a href="https://www.npmjs.com/package/svga-web"><img src="https://img.shields.io/npm/v/svga-web.svg?sanitize=true" alt="Version"></a>
-  <a href="https://www.npmjs.com/package/svga-web"><img src="https://img.shields.io/npm/l/svga-web.svg?sanitize=true" alt="License"></a>
+  <a href="https://npmcharts.com/compare/svga-web2?minimal=true"><img src="https://img.shields.io/npm/dm/svga-web2.svg?sanitize=true" alt="Downloads"></a>
+  <a href="https://www.npmjs.com/package/svga-web2"><img src="https://img.shields.io/npm/v/svga-web2.svg?sanitize=true" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/svga-web2"><img src="https://img.shields.io/npm/l/svga-web2.svg?sanitize=true" alt="License"></a>
 </p>
 
 一个 [SVGA](http://svga.io/) Web 播放器
@@ -11,28 +11,27 @@
 ## 注意
 
 本项目不是由 [svga.io](http://svga.io/) 官方维护的。
-目前由我个人维护，最初代码来自官方 [svga.lite](https://github.com/svga/SVGAPlayer-Web-Lite) 。
-欢迎贡献和讨论。
+Fork 自 [svga-web](https://github.com/Naeemo/svga-web)，相对于原项目，解决了一些移动端的兼容性问题。
 
 - [x] TypeScript 支持。
-- [x] 使用原生 `audio` 标签实现的声音播放。
+- [x] 使用 `howler` 实现的声音播放。
 
 ## 安装
 
 ### NPM
 
 ```sh
-yarn add svga-web
+yarn add svga-web2
 
 # 或者
 
-npm i svga-web
+npm i svga-web2
 ```
 
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/svga-web/svga-web.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/svga-web2/dist/svga-web2.umd.min.js"></script>
 ```
 
 ## 例子/文档
@@ -57,7 +56,7 @@ npm i svga-web
 ```
 
 ```js
-import { Downloader, Parser, Player } from 'svga-web'
+import { Downloader, Parser, Player } from 'svga-web2'
 
 const downloader = new Downloader()
 const parser = new Parser()
@@ -105,7 +104,7 @@ const player = new Player('#canvas')
 你能够通过改变 `svga data` 对应键值的元素
 
 ```js
-import { Downloader, Parser, Player } from 'svga-web'
+import { Downloader, Parser, Player } from 'svga-web2'
 
 const downloader = new Downloader()
 const parser = new Parser()
@@ -188,7 +187,7 @@ player.start()
 ### 可复用实例化 Downloader & Parser
 
 ```js
-import { Downloader, Parser, Player } from 'svga-web'
+import { Downloader, Parser, Player } from 'svga-web2'
 
 const downloader = new Downloader()
 const parser = new Parser()
@@ -227,7 +226,7 @@ player.destroy()
 已下载并解析的数据利用 IndexedDB 进行持久化缓存，下次可避免重复消耗资源对统一 SVGA 下载和解析
 
 ```js
-import { Downloader, Parser, Player, DB } from 'svga-web'
+import { Downloader, Parser, Player, DB } from 'svga-web2'
 
 const svgaFile = 'test.svga'
 let data = void 0
@@ -295,7 +294,3 @@ yarn build
 ## LICENSE
 
 [MIT](./LICENSE)
-
----
-
-感谢 [JetBrains 免费许可证计划](https://www.jetbrains.com/zh-cn/community/opensource/#support?from=svga-web) 支持本项目开发。

@@ -1,9 +1,9 @@
-# svga-web
+# svga-web2
 
 <p>
-  <a href="https://npmcharts.com/compare/svga-web?minimal=true"><img src="https://img.shields.io/npm/dm/svga-web.svg?sanitize=true" alt="Downloads"></a>
-  <a href="https://www.npmjs.com/package/svga-web"><img src="https://img.shields.io/npm/v/svga-web.svg?sanitize=true" alt="Version"></a>
-  <a href="https://www.npmjs.com/package/svga-web"><img src="https://img.shields.io/npm/l/svga-web.svg?sanitize=true" alt="License"></a>
+  <a href="https://npmcharts.com/compare/svga-web2?minimal=true"><img src="https://img.shields.io/npm/dm/svga-web2.svg?sanitize=true" alt="Downloads"></a>
+  <a href="https://www.npmjs.com/package/svga-web2"><img src="https://img.shields.io/npm/v/svga-web2.svg?sanitize=true" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/svga-web2"><img src="https://img.shields.io/npm/l/svga-web2.svg?sanitize=true" alt="License"></a>
 </p>
 
 A [SVGA](http://svga.io/en/) player for modern Web.
@@ -13,28 +13,28 @@ A [SVGA](http://svga.io/en/) player for modern Web.
 ## Notice
 
 This lib is not an official one by [svga.io](http://svga.io/en/).
-It is maintained by myself currently, original source came from the official [svga.lite](https://github.com/svga/SVGAPlayer-Web-Lite).
-Contributions and discussions are welcome.
+Fork from [svga-web](https://github.com/Naeemo/svga-web), compared to the original project, it fixes some compatibility issues on mobile devices.
+
 
 - [x] TypeScript Support.
-- [x] Audio support with native `audio` element.
+- [x] Audio support with `howler`.
 
 ## Usage
 
 ### NPM
 
 ```sh
-yarn add svga-web
+yarn add svga-web2
 
 # or
 
-npm i svga-web
+npm i svga-web2
 ```
 
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/svga-web/svga-web.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/svga-web2/dist/svga-web2.umd.min.js"></script>
 ```
 
 ## Example/Doc
@@ -59,7 +59,7 @@ npm i svga-web
 ```
 
 ```js
-import { Downloader, Parser, Player } from 'svga-web'
+import { Downloader, Parser, Player } from 'svga-web2'
 
 const downloader = new Downloader()
 const parser = new Parser()
@@ -96,7 +96,7 @@ const player = new Player('#canvas') // #canvas is HTMLCanvasElement
 You can change the elements of the `svga data` corresponding to the key values.
 
 ```js
-import { Downloader, Parser, Player } from 'svga-web'
+import { Downloader, Parser, Player } from 'svga-web2'
 
 const downloader = new Downloader()
 const parser = new Parser()
@@ -179,7 +179,7 @@ player.start()
 ### Reusable instantiated Downloader & Parser
 
 ```js
-import { Downloader, Parser, Player } from 'svga-web'
+import { Downloader, Parser, Player } from 'svga-web2'
 
 const downloader = new Downloader()
 const parser = new Parser()
@@ -218,7 +218,7 @@ player.destroy()
 The downloaded and parsed data is persisted and cached using IndexedDB, and the next time you can avoid reusing resources for unified SVGA download and parsing
 
 ```js
-import { Downloader, Parser, Player, DB } from 'svga-web'
+import { Downloader, Parser, Player, DB } from 'svga-web2'
 
 const svgaFile = 'test.svga'
 let data = void 0
@@ -285,7 +285,3 @@ yarn build
 ## LICENSE
 
 [MIT](./LICENSE)
-
----
-
-Supported by [JetBrains open source program](https://www.jetbrains.com/community/opensource/#support?from=svga-web).

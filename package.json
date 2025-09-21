@@ -1,6 +1,6 @@
 {
   "name": "svga-web2",
-  "version": "2.4.13",
+  "version": "2.4.14",
   "description": "A SVGA player for modern Web.",
   "homepage": "https://github.com/CrazyHuiLiang/svga-web",
   "bugs": {
@@ -24,7 +24,7 @@
   "module": "./dist/svga-web2.mjs",
   "exports": {
     ".": {
-      "import": "./dist/svga-web.mjs",
+      "import": "./dist/svga-web2.mjs",
       "require": "./dist/svga-web2.umd.js"
     }
   },
@@ -37,7 +37,7 @@
     "prepublish": "yarn build",
     "proto": "node scripts/generate-proto.mjs"
   },
-  "author": "naeemo<naeemo@qq.com>",
+  "author": "crazyhuiliang<crazyhuiliang@163.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^18.7.5",
